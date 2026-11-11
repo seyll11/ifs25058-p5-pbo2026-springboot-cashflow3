@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        APP_NAME = 'ifs00000-p5-pbo2026-springboot-cashflow'
+        APP_NAME = 'ifs25058-p5-pbo2026-springboot-cashflow'
         IMAGE    = "registry.example.com/pbo2026/${APP_NAME}"
         TAG      = "${env.BUILD_NUMBER}"
     }

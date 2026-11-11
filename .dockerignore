@@ -1,0 +1,9 @@
+target/
+.git/
+.idea/
+.vscode/
+node_modules/
+uploads/
+.env
+src/main/frontend/generated/
+*.log

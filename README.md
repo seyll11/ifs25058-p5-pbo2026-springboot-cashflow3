@@ -3,7 +3,7 @@
 Studi kasus Praktikum 5 PBO 2026 (Clean Architecture, Generics, Exceptions, JDBC, Auth, Role).
 
 ## 0. Ganti username (WAJIB)
-Proyek memakai placeholder `ifs00000`. Ganti dengan username Anda:
+Proyek memakai placeholder `ifs25058`. Ganti dengan username Anda:
 
 ```bash
 ./rename.sh ifs18xyz          # ganti isi file + nama folder package

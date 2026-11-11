@@ -11,9 +11,9 @@
     </parent>
 
     <groupId>org.delcom</groupId>
-    <artifactId>ifs00000-p5-pbo2026-springboot-cashflow</artifactId>
+    <artifactId>ifs25058-p5-pbo2026-springboot-cashflow</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ifs00000-p5-pbo2026-springboot-cashflow</name>
+    <name>ifs25058-p5-pbo2026-springboot-cashflow</name>
     <description>Cashflow (catatan keuangan) - Spring Boot + Vaadin + JDBC PostgreSQL</description>
 
     <properties>
