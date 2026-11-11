@@ -1,0 +1,119 @@
+/* ===== Cashflow - styles.css ===== */
+:root {
+  --cf-primary: #2563EB;
+  --cf-income: #15803d;
+  --cf-expense: #b91c1c;
+  --cf-surface: #ffffff;
+  --cf-muted: #6b7280;
+  --cf-footer-bg: #F3F4F6;
+}
+
+body { background: #f5f7fb; }
+
+/* ---- hover pointer pada seluruh kontrol interaktif ---- */
+vaadin-button,
+vaadin-menu-bar-item,
+vaadin-menu-bar-button,
+vaadin-context-menu-item,
+vaadin-tab,
+vaadin-drawer-toggle,
+vaadin-upload vaadin-button,
+vaadin-upload-file vaadin-button,
+vaadin-grid-sorter,
+vaadin-side-nav-item::part(item),
+vaadin-side-nav-item::part(toggle-button),
+vaadin-select,
+a[href],
+.cf-thumb,
+.cf-preview-image {
+  cursor: pointer;
+}
+vaadin-button[disabled],
+vaadin-menu-bar-button[disabled] {
+  cursor: not-allowed;
+}
+
+/* ---- kartu & halaman ---- */
+.cf-card {
+  background: var(--cf-surface);
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, .08);
+  padding: 24px;
+}
+.cf-auth-card { width: min(420px, 92vw); }
+.cf-profile-card { width: min(520px, 100%); display: flex; flex-direction: column; gap: 10px; }
+.cf-hint { color: var(--cf-muted); font-size: .85rem; margin: 0; }
+
+/* ---- navbar ---- */
+.cf-navbar { padding: 0 12px; }
+.cf-app-title { font-size: 1.15rem; margin: 0; color: var(--cf-primary); }
+.cf-drawer-title { display: block; padding: 16px; font-weight: 600; color: var(--cf-muted); }
+.cf-account { gap: 10px; }
+.cf-account-name { font-weight: 600; }
+
+/* ---- badge ---- */
+.cf-badge {
+  display: inline-block; padding: 2px 10px; border-radius: 999px;
+  font-size: .75rem; font-weight: 600; background: #e5e7eb; color: #374151;
+}
+.cf-badge-admin { background: #ede9fe; color: #5b21b6; }
+.cf-badge-income { background: #dcfce7; color: var(--cf-income); }
+.cf-badge-expense { background: #fee2e2; color: var(--cf-expense); }
+
+/* ---- ringkasan ---- */
+.cf-summary-row {
+  display: grid; gap: 14px; width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+.cf-summary-card {
+  background: var(--cf-surface); border-radius: 12px; padding: 14px 18px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, .07);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.cf-summary-caption { color: var(--cf-muted); font-size: .85rem; }
+.cf-summary-value { font-size: 1.35rem; font-weight: 700; }
+.cf-summary-neutral { color: #111827; }
+.cf-amount-income { color: var(--cf-income); font-weight: 600; }
+.cf-amount-expense { color: var(--cf-expense); font-weight: 600; }
+
+/* ---- grid & thumbnail ---- */
+.cf-grid { border-radius: 12px; background: var(--cf-surface); }
+.cf-thumb { width: 56px; height: 40px; object-fit: cover; border-radius: 6px; margin: 0; }
+
+/* ---- dialog modal: header biru primer, footer abu-abu, tombol di kanan ---- */
+vaadin-dialog-overlay::part(header),
+.cf-dialog::part(header) {
+  background: var(--cf-primary);
+  color: #ffffff;
+}
+vaadin-dialog-overlay::part(footer),
+.cf-dialog::part(footer) {
+  background: var(--cf-footer-bg);
+  border-top: 1px solid #d1d5db;
+  justify-content: flex-end;
+}
+.cf-dialog-title { color: #ffffff; font-weight: 600; font-size: 1.1rem; }
+.cf-dialog-footer { justify-content: flex-end; }
+
+/* ---- preview gambar ---- */
+.cf-preview-viewport { max-height: 65vh; overflow: auto; }
+.cf-preview-image { max-width: 100%; transition: transform .15s ease; }
+
+/* ---- loading indicator global (glowing bar) ---- */
+.v-loading-indicator {
+  position: fixed !important; z-index: 2147483647; left: 0; top: 0;
+  width: 50%; height: 4px; opacity: 1; pointer-events: none;
+  background: linear-gradient(90deg, #2563EB, #0ea5ff, #2563EB);
+  background-size: 200% 100%;
+  box-shadow: 0 0 10px 1px rgba(37, 99, 235, .8);
+  animation: cf-bar-start 3s 0.2s forwards, cf-bar-glow 1.2s linear infinite;
+}
+.v-loading-indicator.second { width: 80%; }
+.v-loading-indicator.third { width: 95%; }
+.v-loading-indicator[style*="none"] {
+  display: block !important; width: 100% !important; opacity: 0;
+  animation: cf-bar-fade .5s; pointer-events: none;
+}
+@keyframes cf-bar-start { 0% { width: 0; } 100% { width: 90%; } }
+@keyframes cf-bar-glow { 0% { background-position: 0 0; } 100% { background-position: -200% 0; } }
+@keyframes cf-bar-fade { 0% { opacity: 1; width: 100%; } 100% { opacity: 0; width: 100%; } }

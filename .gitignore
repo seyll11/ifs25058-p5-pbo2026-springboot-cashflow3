@@ -1,0 +1,77 @@
+HELP.md
+
+### Environment ###
+.env
+!.env.example
+
+### Uploads ###
+uploads/
+
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### Vaadin / Frontend ###
+node_modules/
+node/
+pnpm-lock.yaml
+.pnpm-store/
+src/main/frontend/generated/
+src/main/frontend/index.html
+vite.generated.ts
+webpack.generated.js
+types.d.ts
+package.json
+package-lock.json
+yarn.lock
+bun.lockb
+.vaadin/
+
+### Database / H2 ###
+*.mv.db
+*.trace.db
+
+### Logs & temp ###
+*.log
+*.tmp
+*.temp
+*.swp
+*~
+.cache/
+
+### OS ###
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+### IDE ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+.vscode/
+.history/
+*.code-workspace
+hs_err_pid*
+replay_pid*
+*.class
