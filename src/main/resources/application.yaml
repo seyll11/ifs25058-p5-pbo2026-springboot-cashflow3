@@ -19,6 +19,11 @@ spring:
 
 server:
   port: ${APP_PORT:${PORT:8080}}
+  # Kompres respons teks (HTML/JS/CSS/JSON) agar halaman dimuat lebih cepat
+  compression:
+    enabled: true
+    min-response-size: 1024
+    mime-types: text/html,text/css,text/javascript,application/javascript,application/json,application/manifest+json,image/svg+xml
   servlet:
     session:
       timeout: 8h

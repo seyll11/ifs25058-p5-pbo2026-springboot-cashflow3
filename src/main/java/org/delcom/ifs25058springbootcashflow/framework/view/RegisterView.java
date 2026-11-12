@@ -4,7 +4,7 @@ import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -41,6 +41,7 @@ public class RegisterView extends VerticalLayout implements BeforeEnterObserver 
         this.users = users;
 
         setSizeFull();
+        getElement().setAttribute("role", "main");
         setAlignItems(FlexComponent.Alignment.CENTER);
         setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
@@ -58,7 +59,7 @@ public class RegisterView extends VerticalLayout implements BeforeEnterObserver 
         progress.setVisible(false);
 
         PageCard card = new PageCard(
-                new H2("Buat Akun"),
+                new H1("Buat Akun"),
                 fullName, username, password, confirm, progress, registerButton,
                 new Paragraph(new Span("Sudah punya akun? "), new RouterLink("Masuk", LoginView.class)));
         card.addClassName("cf-auth-card");

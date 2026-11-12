@@ -4,7 +4,7 @@ import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -39,6 +39,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         this.users = users;
 
         setSizeFull();
+        getElement().setAttribute("role", "main");
         setAlignItems(FlexComponent.Alignment.CENTER);
         setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
@@ -56,7 +57,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         progress.setVisible(false);
 
         PageCard card = new PageCard(
-                new H2("Cashflow"),
+                new H1("Cashflow"),
                 new Paragraph("Masuk untuk mencatat pemasukan dan pengeluaran Anda."),
                 username, password, progress, loginButton,
                 new Paragraph(new com.vaadin.flow.component.html.Span("Belum punya akun? "),

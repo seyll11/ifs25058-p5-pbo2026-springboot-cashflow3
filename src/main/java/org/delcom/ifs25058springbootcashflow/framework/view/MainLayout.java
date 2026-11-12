@@ -1,5 +1,6 @@
 package org.delcom.ifs25058springbootcashflow.framework.view;
 
+import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -25,13 +26,14 @@ import org.delcom.ifs25058springbootcashflow.framework.auth.AuthSession;
 public class MainLayout extends AppLayout implements RouterLayout, BeforeEnterObserver {
 
     private final IUserRepository users;
-    private final SideNav nav = new SideNav();
+    private final SideNav nav = new SideNav("Menu");
     private final HorizontalLayout account = new HorizontalLayout();
 
     public MainLayout(IUserRepository users) {
         this.users = users;
 
         DrawerToggle toggle = new DrawerToggle();
+        toggle.getElement().setAttribute("aria-label", "Buka atau tutup menu navigasi");
         H1 title = new H1("Cashflow");
         title.addClassName("cf-app-title");
 
@@ -43,12 +45,22 @@ public class MainLayout extends AppLayout implements RouterLayout, BeforeEnterOb
         bar.setAlignItems(FlexComponent.Alignment.CENTER);
         bar.expand(title);
         bar.addClassName("cf-navbar");
+        // Landmark aksesibilitas: navbar = banner, drawer = navigation, konten = main.
+        bar.getElement().setAttribute("role", "banner");
         addToNavbar(bar);
 
-        Span brand = new Span("Menu");
-        brand.addClassName("cf-drawer-title");
-        addToDrawer(brand, nav);
+        nav.getElement().setAttribute("role", "navigation");
+        addToDrawer(nav);
         setPrimarySection(Section.DRAWER);
+    }
+
+    /** Menandai konten halaman aktif sebagai landmark utama (satu elemen main per dokumen). */
+    @Override
+    public void showRouterLayoutContent(HasElement content) {
+        super.showRouterLayoutContent(content);
+        if (content != null) {
+            content.getElement().setAttribute("role", "main");
+        }
     }
 
     @Override
@@ -77,6 +89,7 @@ public class MainLayout extends AppLayout implements RouterLayout, BeforeEnterOb
         MenuBar menu = new MenuBar();
         menu.addThemeVariants(MenuBarVariant.LUMO_TERTIARY_INLINE);
         var root = menu.addItem(avatar);
+        root.getElement().setAttribute("aria-label", "Menu akun " + user.fullName());
         root.getSubMenu().addItem("Profil", e -> UI.getCurrent().navigate(ProfileView.class));
         root.getSubMenu().addItem("Keluar", e -> logout());
 

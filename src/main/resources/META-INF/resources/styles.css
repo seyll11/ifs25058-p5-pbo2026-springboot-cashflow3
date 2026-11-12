@@ -4,7 +4,7 @@
   --cf-income: #15803d;
   --cf-expense: #b91c1c;
   --cf-surface: #ffffff;
-  --cf-muted: #6b7280;
+  --cf-muted: #4b5563;
   --cf-footer-bg: #F3F4F6;
 }
 
@@ -33,6 +33,16 @@ vaadin-menu-bar-button[disabled] {
   cursor: not-allowed;
 }
 
+/* ---- tautan: harus dapat dibedakan tanpa bergantung pada warna (aksesibilitas) ---- */
+a[href] {
+  color: var(--cf-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+a[href]:hover { text-decoration-thickness: 2px; }
+a[href]:focus-visible { outline: 2px solid var(--cf-primary); outline-offset: 2px; border-radius: 2px; }
+
 /* ---- kartu & halaman ---- */
 .cf-card {
   background: var(--cf-surface);
@@ -41,13 +51,13 @@ vaadin-menu-bar-button[disabled] {
   padding: 24px;
 }
 .cf-auth-card { width: min(420px, 92vw); }
+.cf-auth-card h1 { font-size: 1.5rem; margin-top: 0; }
 .cf-profile-card { width: min(520px, 100%); display: flex; flex-direction: column; gap: 10px; }
 .cf-hint { color: var(--cf-muted); font-size: .85rem; margin: 0; }
 
 /* ---- navbar ---- */
 .cf-navbar { padding: 0 12px; }
 .cf-app-title { font-size: 1.15rem; margin: 0; color: var(--cf-primary); }
-.cf-drawer-title { display: block; padding: 16px; font-weight: 600; color: var(--cf-muted); }
 .cf-account { gap: 10px; }
 .cf-account-name { font-weight: 600; }
 
