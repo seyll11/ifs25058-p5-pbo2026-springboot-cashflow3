@@ -6,6 +6,7 @@ import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteAlias;
 import org.delcom.ifs25058springbootcashflow.adapter.presenter.FinancePresenter;
 import org.delcom.ifs25058springbootcashflow.adapter.storage.FileStorage;
 import org.delcom.ifs25058springbootcashflow.domain.entity.User;
@@ -15,6 +16,9 @@ import org.delcom.ifs25058springbootcashflow.usecase.FinanceUseCase;
 
 /** Dashboard transaksi milik akun yang sedang login (USER maupun ADMIN). */
 @Route(value = "", layout = MainLayout.class)
+@RouteAlias(value = "dashboard", layout = MainLayout.class)
+@RouteAlias(value = "transactions", layout = MainLayout.class)
+@RouteAlias(value = "reports", layout = MainLayout.class)
 @PageTitle("Transaksi | Cashflow")
 public class FinanceView extends VerticalLayout implements BeforeEnterObserver {
 
