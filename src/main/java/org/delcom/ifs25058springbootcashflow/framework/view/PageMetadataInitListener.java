@@ -4,13 +4,18 @@ import com.vaadin.flow.server.ServiceInitEvent;
 import com.vaadin.flow.server.VaadinServiceInitListener;
 import org.springframework.stereotype.Component;
 
-/** Menambahkan atribut bahasa pada elemen html (aksesibilitas &amp; SEO) di halaman awal Vaadin. */
+/** Menambahkan bahasa dan judul bawaan pada halaman awal Vaadin (aksesibilitas &amp; SEO). */
 @Component
 public class PageMetadataInitListener implements VaadinServiceInitListener {
 
     @Override
     public void serviceInit(ServiceInitEvent event) {
-        event.addIndexHtmlRequestListener(response ->
-                response.getDocument().select("html").attr("lang", "id"));
+        event.addIndexHtmlRequestListener(response -> {
+            var document = response.getDocument();
+            document.select("html").attr("lang", "id");
+            if (document.title().isBlank()) {
+                document.title("Cashflow");
+            }
+        });
     }
 }
