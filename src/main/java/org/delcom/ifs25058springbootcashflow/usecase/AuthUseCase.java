@@ -3,6 +3,7 @@ package org.delcom.ifs25058springbootcashflow.usecase;
 import org.delcom.ifs25058springbootcashflow.domain.PasswordHasher;
 import org.delcom.ifs25058springbootcashflow.domain.entity.Role;
 import org.delcom.ifs25058springbootcashflow.domain.entity.User;
+import org.delcom.ifs25058springbootcashflow.domain.exception.DomainException;
 import org.delcom.ifs25058springbootcashflow.domain.exception.ValidationException;
 import org.delcom.ifs25058springbootcashflow.domain.repository.IUserRepository;
 import java.util.Locale;
@@ -43,18 +44,33 @@ public class AuthUseCase {
         return found.get();
     }
 
-    /** Membuat admin dari ROOT_* bila belum ada; bila sudah ada, dikembalikan apa adanya. */
-    public User ensureRootAdmin(String username, String password) throws ValidationException {
+    /**
+     * Membuat admin dari ROOT_* bila belum ada. Bila sudah ada, baris tersebut
+     * diperbaiki seperlunya: role dijamin ADMIN dan hash password diselaraskan
+     * dengan ROOT_PASSWORD bila belum cocok. Ini menjaga akun uji (admin/admin123)
+     * selalu bisa login walau data lama sempat rusak.
+     */
+    public User ensureRootAdmin(String username, String password) throws DomainException {
         String name = normalize(username);
         if (name.isEmpty()) {
             throw new ValidationException("ROOT_USERNAME tidak boleh kosong");
         }
         requirePassword(password);
         Optional<User> existing = users.findByUsername(name);
-        if (existing.isPresent()) {
-            return existing.get();
+        if (existing.isEmpty()) {
+            return users.save(name, PasswordHasher.hash(password), "Administrator", Role.ADMIN);
         }
-        return users.save(name, PasswordHasher.hash(password), "Administrator", Role.ADMIN);
+        User admin = existing.get();
+        User repaired = admin;
+        if (repaired.role() != Role.ADMIN) {
+            repaired = new User(repaired.id(), repaired.username(), repaired.passwordHash(),
+                    repaired.fullName(), Role.ADMIN, repaired.photoPath());
+        }
+        if (!PasswordHasher.verify(password, repaired.passwordHash())) {
+            repaired = new User(repaired.id(), repaired.username(), PasswordHasher.hash(password),
+                    repaired.fullName(), repaired.role(), repaired.photoPath());
+        }
+        return repaired == admin ? admin : users.save(repaired);
     }
 
     static void requirePassword(String password) throws ValidationException {

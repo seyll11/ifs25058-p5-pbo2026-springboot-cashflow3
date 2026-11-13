@@ -112,14 +112,27 @@ public class JdbcTransactionRepository implements ITransactionRepository {
             binder.bind(ps);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
+                    Timestamp created = rs.getTimestamp("created_at");
                     result.add(new Transaction(rs.getInt("id"), rs.getInt("user_id"), rs.getString("description"),
-                            rs.getLong("amount"), TransactionType.valueOf(rs.getString("type")),
-                            rs.getString("proof_path"), rs.getTimestamp("created_at").toLocalDateTime()));
+                            rs.getLong("amount"), parseType(rs.getString("type")),
+                            rs.getString("proof_path"), created == null ? null : created.toLocalDateTime()));
                 }
             }
             return result;
         } catch (SQLException e) {
             throw new RepositoryException("Gagal membaca transaksi", e);
+        }
+    }
+
+    /** Membaca tipe transaksi dengan toleran; nilai tak dikenal dianggap PEMASUKAN. */
+    static TransactionType parseType(String raw) {
+        if (raw == null) {
+            return TransactionType.INCOME;
+        }
+        try {
+            return TransactionType.valueOf(raw.trim().toUpperCase(java.util.Locale.ROOT));
+        } catch (IllegalArgumentException e) {
+            return TransactionType.INCOME;
         }
     }
 }

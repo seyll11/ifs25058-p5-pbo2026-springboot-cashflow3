@@ -55,6 +55,23 @@ a[href]:focus-visible { outline: 2px solid var(--cf-primary); outline-offset: 2p
 .cf-profile-card { width: min(520px, 100%); display: flex; flex-direction: column; gap: 10px; }
 .cf-hint { color: var(--cf-muted); font-size: .85rem; margin: 0; }
 
+/* ---- form login: input HTML native (tanpa shadow DOM) ---- */
+.cf-field-label {
+  display: block; width: 100%; margin: 0 0 4px;
+  font-size: .85rem; font-weight: 600; color: var(--cf-muted);
+}
+.cf-auth-card input {
+  box-sizing: border-box; width: 100%; margin: 0 0 14px;
+  padding: 10px 12px; font: inherit; color: #111827;
+  background: var(--cf-surface);
+  border: 1px solid #cbd5e1; border-radius: 8px;
+}
+.cf-auth-card input:focus-visible {
+  outline: 2px solid var(--cf-primary); outline-offset: 1px;
+  border-color: var(--cf-primary);
+}
+.cf-auth-card input::placeholder { color: #9ca3af; }
+
 /* ---- navbar ---- */
 .cf-navbar { padding: 0 12px; }
 .cf-app-title { font-size: 1.15rem; margin: 0; color: var(--cf-primary); }

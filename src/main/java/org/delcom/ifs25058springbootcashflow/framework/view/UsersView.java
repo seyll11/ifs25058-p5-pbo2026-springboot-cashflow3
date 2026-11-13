@@ -50,7 +50,10 @@ public class UsersView extends VerticalLayout implements BeforeEnterObserver {
         grid.addColumn(User::username).setHeader("Username").setSortable(true);
         grid.addComponentColumn(u -> {
             Span badge = new Span(u.role().name());
-            badge.addClassName(u.isAdmin() ? "cf-badge cf-badge-admin" : "cf-badge");
+            badge.addClassName("cf-badge");
+            if (u.isAdmin()) {
+                badge.addClassName("cf-badge-admin");
+            }
             return badge;
         }).setHeader("Role").setComparator(User::role).setSortable(true);
         grid.addComponentColumn(u -> {

@@ -100,7 +100,7 @@ public class TransactionPanel extends VerticalLayout {
         }).setHeader("Jumlah").setComparator(Transaction::amount).setSortable(true);
         grid.addComponentColumn(t -> {
             Span badge = new Span(presenter.typeLabel(t.type()));
-            badge.addClassName(t.isIncome() ? "cf-badge cf-badge-income" : "cf-badge cf-badge-expense");
+            badge.addClassNames("cf-badge", t.isIncome() ? "cf-badge-income" : "cf-badge-expense");
             return badge;
         }).setHeader("Tipe").setComparator(Transaction::type).setSortable(true);
         grid.addComponentColumn(this::proofThumbnail).setHeader("Bukti").setFlexGrow(0).setWidth("110px");

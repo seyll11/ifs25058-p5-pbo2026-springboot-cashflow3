@@ -133,6 +133,25 @@ public class JdbcUserRepository implements IUserRepository {
 
     private static User map(ResultSet rs) throws SQLException {
         return new User(rs.getInt("id"), rs.getString("username"), rs.getString("password_hash"),
-                rs.getString("full_name"), Role.valueOf(rs.getString("role")), rs.getString("photo_path"));
+                rs.getString("full_name"), parseRole(rs.getString("role")), rs.getString("photo_path"));
+    }
+
+    /**
+     * Membaca role dengan toleran: nilai tak dikenal / beda huruf besar-kecil
+     * tidak boleh membuat baris pengguna gagal dibaca (mis. data lama "ROLE_ADMIN").
+     */
+    static Role parseRole(String raw) {
+        if (raw == null) {
+            return Role.USER;
+        }
+        String value = raw.trim().toUpperCase(java.util.Locale.ROOT);
+        if (value.startsWith("ROLE_")) {
+            value = value.substring("ROLE_".length());
+        }
+        try {
+            return Role.valueOf(value);
+        } catch (IllegalArgumentException e) {
+            return Role.USER;
+        }
     }
 }

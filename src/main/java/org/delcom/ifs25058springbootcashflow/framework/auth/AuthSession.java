@@ -57,6 +57,16 @@ public final class AuthSession {
 
     /** User yang sedang login, atau null. Memulihkan sesi setelah refresh bila belum logout. */
     public static User currentUser(IUserRepository users) {
+        try {
+            return resolveCurrentUser(users);
+        } catch (RuntimeException e) {
+            // Data pengguna rusak tidak boleh membuat halaman gagal render;
+            // anggap belum login supaya diarahkan ke halaman masuk.
+            return null;
+        }
+    }
+
+    private static User resolveCurrentUser(IUserRepository users) {
         VaadinSession vs = VaadinSession.getCurrent();
         if (vs == null) {
             return null;
