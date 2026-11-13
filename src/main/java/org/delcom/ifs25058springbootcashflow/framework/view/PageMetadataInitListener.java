@@ -48,6 +48,29 @@ public class PageMetadataInitListener implements VaadinServiceInitListener {
             #cf-boot p{margin:0;color:#4b5563}
             """;
 
+    /**
+     * Vaadin menyisipkan {@code <vaadin-connection-indicator>} ke {@code <body>} di luar
+     * landmark apa pun, sehingga Axe Core melaporkan pelanggaran {@code region}
+     * ("konten halaman tidak berada di dalam landmark"). Skrip ini memberinya peran
+     * landmark {@code region} + nama aksesibel tanpa menyembunyikan indikatornya.
+     */
+    private static final String CONNECTION_INDICATOR_SCRIPT = """
+            (function () {
+              function tag() {
+                var el = document.querySelector('vaadin-connection-indicator');
+                if (el && el.getAttribute('role') !== 'region') {
+                  el.setAttribute('role', 'region');
+                  el.setAttribute('aria-label', 'Status koneksi aplikasi');
+                }
+              }
+              tag();
+              if (window.MutationObserver) {
+                new MutationObserver(tag).observe(document.body, { childList: true });
+              }
+              setInterval(tag, 2000);
+            })();
+            """;
+
     private static final String BOOT_SCRIPT = """
             (function () {
               var boot = document.getElementById('cf-boot');
@@ -93,6 +116,7 @@ public class PageMetadataInitListener implements VaadinServiceInitListener {
                 appendRawText(document.head(), "style", BOOT_STYLE);
                 document.body().prepend(BOOT_SCREEN);
                 appendRawText(document.body(), "script", BOOT_SCRIPT);
+                appendRawText(document.body(), "script", CONNECTION_INDICATOR_SCRIPT);
             }
         });
     }
